@@ -50,3 +50,15 @@ Before you begin, ensure you have the following:
    mkdir azure-functions-demo
    cd azure-functions-demo
    func init . --worker-runtime node --model modern
+   ```
+   Choose Node.js as the runtime.
+   The --model modern flag ensures you're using the Azure Functions modern programming model.
+
+2. **Create a New HTTP-Triggered Function**:
+   ```bash
+   func new
+   ```
+   Select HTTP Trigger as the template.
+   Name the function (e.g., DemoFunction).
+   Choose anonymous as the authorization level.
+   Your project structure should now look like this:
