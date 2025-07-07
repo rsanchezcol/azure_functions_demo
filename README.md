@@ -51,14 +51,49 @@ Before you begin, ensure you have the following:
    cd azure-functions-demo
    func init . --worker-runtime node --model modern
    ```
-   Choose Node.js as the runtime.
-   The --model modern flag ensures you're using the Azure Functions modern programming model.
+   * Choose Node.js as the runtime.
+   * The --model modern flag ensures you're using the Azure Functions modern programming model.
 
 2. **Create a New HTTP-Triggered Function**:
    ```bash
    func new
    ```
-   Select HTTP Trigger as the template.
-   Name the function (e.g., DemoFunction).
-   Choose anonymous as the authorization level.
-   Your project structure should now look like this:
+   * Select HTTP Trigger as the template.
+   * Name the function (e.g., DemoFunction).
+   * Choose anonymous as the authorization level.
+
+Your project structure should now look like this:
+   ```bash
+    azure-functions-demo/
+    ├── DemoFunction/
+    │   ├── function.json
+    │   ├── index.js
+    ├── host.json
+    ├── local.settings.json
+    └── package.json
+   ```
+
+---
+
+## Code Example
+
+Replace the content of DemoFunction.js with the following code:
+
+**DeemoFunction.js**
+   ```javascript
+   const { app } = require('@azure/functions');
+   
+   app.http('DemoFunction', {
+       methods: ['GET', 'POST'], // Accept GET and POST requests
+       authLevel: 'anonymous',  // Anonymous access
+       handler: async (request, context) => {
+           context.log(`Http function processed request for URL "${request.url}"`);
+   
+           // Retrieve 'name' from query string or request body
+           const name = request.query.get('name') || await request.text() || 'world';
+   
+           // Return greeting message
+           return { body: `Hello, ${name}!` };
+       }
+   });
+   ```
