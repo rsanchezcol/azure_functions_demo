@@ -166,12 +166,12 @@ az login
 
 ### 2. Create a Resource Group:
 ```bash
-az group create --name demoResourceGroup --location eastus
+az group create --name demoResourceGroup --location centralus
 ```
 
 ### 3. Create a Storage Account: Azure Functions require a storage account.
 ```bash
-az storage account create --name demoStorageAccount --location eastus --resource-group demoResourceGroup --sku Standard_LRS
+az storage account create --name demoStorageAccount --location centralus --resource-group demoResourceGroup --sku Standard_LRS
 ```
 
 ### 4. Create a Function App:
@@ -179,7 +179,7 @@ az storage account create --name demoStorageAccount --location eastus --resource
 az functionapp create \
     --name demoAzureFunctionApp \
     --resource-group demoResourceGroup \
-    --consumption-plan-location eastus \
+    --consumption-plan-location centralus \
     --runtime node \
     --functions-version 4 \
     --storage-account demoStorageAccount
