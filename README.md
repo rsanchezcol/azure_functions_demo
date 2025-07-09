@@ -171,23 +171,23 @@ az group create --name demoResourceGroup --location centralus
 
 ### 3. Create a Storage Account: Azure Functions require a storage account.
 ```bash
-az storage account create --name demoStorageAccount --location centralus --resource-group demoResourceGroup --sku Standard_LRS
+az storage account create --name demostorageaccount4321 --location centralus --resource-group demoResourceGroup --sku Standard_LRS
 ```
 
 ### 4. Create a Function App:
 ```bash
 az functionapp create \
-    --name demoAzureFunctionApp \
+    --name demoAzureFunctionAppABC \
     --resource-group demoResourceGroup \
     --consumption-plan-location centralus \
     --runtime node \
     --functions-version 4 \
-    --storage-account demoStorageAccount
+    --storage-account demostorageaccount4321
 ```
 
 ### 5. Deploy Your Function:
 ```bash
-func azure functionapp publish demoAzureFunctionApp
+func azure functionapp publish demoAzureFunctionAppABC
 ```
 
 ---
@@ -199,11 +199,11 @@ az functionapp list --output table
 ```
 To Get Function URL:
 ```bash
-az functionapp show --name demoAzureFunctionApp --resource-group demoResourceGroup --query defaultHostName -o tsv
+az functionapp show --name demoAzureFunctionAppABC --resource-group demoResourceGroup --query defaultHostName -o tsv
 ```
 To Delete Function App:
 ```bash
-az functionapp delete --name demoAzureFunctionApp --resource-group demoResourceGroup
+az functionapp delete --name demoAzureFunctionAppABC --resource-group demoResourceGroup
 ```
 ---
 ## Cleanup/Delete Resources
@@ -211,17 +211,18 @@ After completing this demo, it’s a good idea to clean up your Azure resources 
 
 ### 1. Delete the Function App:
 ```bash
-az functionapp delete --name demoAzureFunctionApp --resource-group demoResourceGroup
+az functionapp delete --name demoAzureFunctionAppABC --resource-group demoResourceGroup
 ```
 
 ### 2. Delete the Storage Account:
 ```bash
-az storage account delete --name demoStorageAccount --resource-group demoResourceGroup
+az storage account delete --name demostorageaccount4321 --resource-group demoResourceGroup
 ```
 
 ### 3. Delete the Resource Group (Deletes All Associated Resources):
 ```bash
-az group delete --name demoResourceGroup --yes --no-wait
+az group delete --name demoResourceGroup --yes
+az group delete --name DefaultResourceGroup-CUS --yes
 ```
 
 ---
