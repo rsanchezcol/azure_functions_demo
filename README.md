@@ -75,7 +75,7 @@ Your project structure should now look like this:
 
 ---
 
-## Code Example
+## **Code Example**
 
 Replace the content of DemoFunction.js with the following code:
 
@@ -97,3 +97,138 @@ Replace the content of DemoFunction.js with the following code:
        }
    });
    ```
+**function.json**
+   ```json
+      {
+        "bindings": [
+          {
+            "authLevel": "anonymous",
+            "type": "httpTrigger",
+            "direction": "in",
+            "name": "req",
+            "methods": [ "get", "post" ]
+          },
+          {
+            "type": "http",
+            "direction": "out",
+            "name": "res"
+          }
+        ]
+      }
+   ```
+---
+
+## **Local Testing**
+
+### 1. Start the Azure Function Locally: Run the following command to start the function runtime:
+
+```bash
+func start
+```
+
+Example output:
+
+```plaintext
+Functions:
+    DemoFunction: [GET,POST] http://localhost:7071/api/DemoFunction
+```
+
+### 2. Test the Function: Use curl, a browser, or Postman to send requests to the function.
+
+GET Request:
+```bash
+curl "http://localhost:7071/api/DemoFunction?name=Azure"
+```
+
+Response:
+```plaintext
+Hello, Azure!
+```
+
+POST Request:
+```bash
+curl -X POST "http://localhost:7071/api/DemoFunction" -d "Azure"
+```
+
+Response:
+```plaintext
+Hello, Azure!
+```
+
+---
+
+## **Deploying to Azure**
+
+### 1. Login to Azure:
+```bash
+az login
+```
+
+### 2. Create a Resource Group:
+```bash
+az group create --name demoResourceGroup --location eastus
+```
+
+### 3. Create a Storage Account: Azure Functions require a storage account.
+```bash
+az storage account create --name demoStorageAccount --location eastus --resource-group demoResourceGroup --sku Standard_LRS
+```
+
+### 4. Create a Function App:
+```bash
+az functionapp create \
+    --name demoAzureFunctionApp \
+    --resource-group demoResourceGroup \
+    --consumption-plan-location eastus \
+    --runtime node \
+    --functions-version 4 \
+    --storage-account demoStorageAccount
+```
+
+### 5. Deploy Your Function:
+```bash
+func azure functionapp publish demoAzureFunctionApp
+```
+
+---
+
+## **Useful Commands**
+To List Deployed Functions:
+```bash
+az functionapp list --output table
+```
+To Get Function URL:
+```bash
+az functionapp show --name demoAzureFunctionApp --resource-group demoResourceGroup --query defaultHostName -o tsv
+```
+To Delete Function App:
+```bash
+az functionapp delete --name demoAzureFunctionApp --resource-group demoResourceGroup
+```
+---
+## Cleanup/Delete Resources
+After completing this demo, it’s a good idea to clean up your Azure resources to avoid charges:
+
+### 1. Delete the Function App:
+```bash
+az functionapp delete --name demoAzureFunctionApp --resource-group demoResourceGroup
+```
+
+### 2. Delete the Storage Account:
+```bash
+az storage account delete --name demoStorageAccount --resource-group demoResourceGroup
+```
+
+### 3. Delete the Resource Group (Deletes All Associated Resources):
+```bash
+az group delete --name demoResourceGroup --yes --no-wait
+```
+
+---
+
+## **Conclusion**
+This demo demonstrates how to create, test, and deploy a simple HTTP-triggered Azure Function using Node.js. Azure Functions is an excellent service for building lightweight, serverless applications that scale automatically.
+
+Feel free to extend this demo by adding more triggers, bindings, logging, or integrating it into a larger application!
+
+Happy Serverless Coding! 🚀
