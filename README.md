@@ -65,9 +65,9 @@ Before you begin, ensure you have the following:
 Your project structure should now look like this:
    ```bash
     azure-functions-demo/
-    ├── DemoFunction/
+    ├── src/functions/
     │   ├── function.json
-    │   ├── index.js
+    │   ├── DemoFunction.js
     ├── host.json
     ├── local.settings.json
     └── package.json
